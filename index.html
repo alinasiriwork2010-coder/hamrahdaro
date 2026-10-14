@@ -1,515 +1,625 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>همراه‌دارو | همراه هوشمند دارویی</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>همراه‌دارو | سامانه مدیریت دارو</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Tahoma, Arial, sans-serif;
-    }
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Tahoma,Arial,sans-serif}
+body{background:#f4f8fb;color:#183247}
+button,input{font-family:inherit}
+button{cursor:pointer;border:0}
+header{
+background:linear-gradient(135deg,#087f8c,#00a896);
+color:white;padding:16px 6%;
+display:flex;justify-content:space-between;align-items:center;
+}
+.logo{font-size:24px;font-weight:bold}
+.user-area{display:flex;gap:10px;align-items:center}
+.container{max-width:1100px;margin:auto;padding:35px 20px}
+.hero{
+background:linear-gradient(135deg,#e9fbfa,#fff);
+padding:50px 25px;text-align:center;border-radius:0 0 30px 30px
+}
+.hero h1{font-size:40px;margin-bottom:15px}
+.hero h1 span{color:#00a896}
+.hero p{color:#607586;font-size:17px;line-height:2}
+.btn{
+padding:12px 22px;border-radius:12px;margin:5px;font-size:15px
+}
+.primary{background:#00a896;color:white}
+.secondary{background:white;color:#087f8c;border:1px solid #00a896}
+.logout{background:#fff;color:#087f8c;padding:9px 15px;border-radius:10px}
 
-    body {
-      background: #f4f8fb;
-      color: #17324d;
-    }
+.auth{
+max-width:450px;margin:35px auto;background:white;padding:30px;
+border-radius:20px;box-shadow:0 10px 30px #00000012
+}
+.auth h2{text-align:center;margin-bottom:20px}
+input{
+width:100%;padding:13px;margin:7px 0;border:1px solid #d7e1e8;
+border-radius:10px;font-size:15px
+}
+.auth button{width:100%;margin-top:10px}
 
-    header {
-      background: linear-gradient(135deg, #087f8c, #00a896);
-      color: white;
-      padding: 18px 7%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
+.dashboard{display:none}
+.cards{
+display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:25px 0
+}
+.card{
+background:white;padding:22px;border-radius:18px;
+box-shadow:0 7px 25px #0000000b
+}
+.card .icon{font-size:32px}
+.card strong{font-size:25px;display:block;margin-top:10px}
+.card small{color:#708090}
 
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
-    }
+.panel{
+background:white;padding:25px;border-radius:20px;
+margin-top:20px;box-shadow:0 7px 25px #0000000b
+}
+.panel h2{margin-bottom:18px}
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-right: 20px;
-      font-size: 15px;
-    }
+.medicine{
+display:flex;justify-content:space-between;align-items:center;
+padding:15px;border:1px solid #e4ebef;border-radius:13px;margin:10px 0
+}
+.medicine strong{display:block;margin-bottom:5px}
+.medicine small{color:#718096}
 
-    .hero {
-      min-height: 620px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 40px;
-      padding: 70px 8%;
-      background: linear-gradient(135deg, #e9fbfa, #ffffff);
-    }
+.badge{
+padding:6px 10px;border-radius:8px;
+background:#e7faf7;color:#078574;font-size:12px
+}
 
-    .hero-text {
-      max-width: 600px;
-    }
+.modal{
+display:none;position:fixed;inset:0;background:#0008;
+align-items:center;justify-content:center;padding:20px;z-index:100
+}
+.modal-box{
+background:white;width:100%;max-width:450px;padding:25px;
+border-radius:20px
+}
+.modal-box h2{margin-bottom:15px}
 
-    .hero h1 {
-      font-size: 48px;
-      line-height: 1.5;
-      margin-bottom: 20px;
-    }
+.empty{
+text-align:center;color:#788895;padding:30px
+}
 
-    .hero h1 span {
-      color: #00a896;
-    }
+footer{
+margin-top:50px;background:#102a43;color:white;
+text-align:center;padding:25px;line-height:2
+}
 
-    .hero p {
-      font-size: 19px;
-      line-height: 2;
-      color: #526779;
-      margin-bottom: 30px;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    button {
-      border: none;
-      cursor: pointer;
-      border-radius: 12px;
-      padding: 14px 25px;
-      font-size: 16px;
-    }
-
-    .primary {
-      background: #00a896;
-      color: white;
-    }
-
-    .secondary {
-      background: white;
-      color: #087f8c;
-      border: 1px solid #00a896;
-    }
-
-    .phone {
-      width: 280px;
-      height: 520px;
-      background: #102a43;
-      border-radius: 35px;
-      padding: 12px;
-      box-shadow: 0 25px 50px rgba(0,0,0,.2);
-    }
-
-    .screen {
-      height: 100%;
-      border-radius: 25px;
-      background: #f7ffff;
-      padding: 25px 15px;
-    }
-
-    .screen h3 {
-      color: #087f8c;
-      margin-bottom: 20px;
-    }
-
-    .medicine {
-      background: white;
-      border-radius: 15px;
-      padding: 16px;
-      margin-bottom: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,.07);
-    }
-
-    .medicine strong {
-      display: block;
-      margin-bottom: 7px;
-    }
-
-    .medicine small {
-      color: #718096;
-    }
-
-    section {
-      padding: 80px 8%;
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 45px;
-    }
-
-    .section-title h2 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-
-    .section-title p {
-      color: #718096;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    .card {
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,.06);
-      transition: .3s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .icon {
-      font-size: 40px;
-      margin-bottom: 15px;
-    }
-
-    .card h3 {
-      margin-bottom: 10px;
-    }
-
-    .card p {
-      color: #667788;
-      line-height: 1.9;
-    }
-
-    .dashboard {
-      background: #0b7285;
-      color: white;
-      border-radius: 30px;
-      padding: 45px;
-    }
-
-    .dashboard h2 {
-      margin-bottom: 25px;
-    }
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .stat {
-      background: rgba(255,255,255,.13);
-      padding: 25px;
-      border-radius: 18px;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 30px;
-      margin-bottom: 5px;
-    }
-
-    .contact {
-      max-width: 600px;
-      margin: auto;
-      background: white;
-      padding: 35px;
-      border-radius: 22px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.07);
-    }
-
-    input {
-      width: 100%;
-      padding: 14px;
-      margin: 8px 0;
-      border: 1px solid #d9e2ec;
-      border-radius: 10px;
-      font-size: 15px;
-    }
-
-    footer {
-      background: #102a43;
-      color: white;
-      text-align: center;
-      padding: 30px;
-      line-height: 2;
-    }
-
-    @media(max-width: 800px) {
-      header {
-        padding: 15px 5%;
-      }
-
-      nav {
-        display: none;
-      }
-
-      .hero {
-        flex-direction: column;
-        text-align: center;
-        padding: 50px 5%;
-      }
-
-      .hero h1 {
-        font-size: 34px;
-      }
-
-      .buttons {
-        justify-content: center;
-      }
-
-      .features,
-      .dashboard-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .phone {
-        width: 250px;
-        height: 460px;
-      }
-    }
-  </style>
+@media(max-width:800px){
+.cards{grid-template-columns:repeat(2,1fr)}
+.hero h1{font-size:30px}
+}
+@media(max-width:500px){
+.cards{grid-template-columns:1fr 1fr}
+header{padding:14px}
+.logo{font-size:19px}
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">💊 همراه‌دارو</div>
+<div class="logo">💊 همراه‌دارو</div>
 
-  <nav>
-    <a href="#features">امکانات</a>
-    <a href="#dashboard">داشبورد</a>
-    <a href="#contact">ورود</a>
-  </nav>
+<div class="user-area">
+<span id="userName"></span>
+<button class="logout" id="logoutBtn" onclick="logout()" style="display:none">
+خروج
+</button>
+</div>
 </header>
 
 <section class="hero">
+<h1>دستیار هوشمند <span>دارویی</span></h1>
+<p>
+یادآوری دارو، مدیریت داروها و ارتباط آسان‌تر با خانواده
+</p>
+</section>
 
-  <div class="hero-text">
-    <h1>
-      داروهایت را<br>
-      با <span>همراه‌دارو</span><br>
-      فراموش نکن
-    </h1>
+<!-- LOGIN -->
 
-    <p>
-      یک دستیار هوشمند برای مدیریت داروها،
-      یادآوری مصرف دارو و ارتباط بهتر سالمندان
-      با خانواده.
-    </p>
+<section id="authSection">
 
-    <div class="buttons">
-      <button class="primary" onclick="startApp()">
-        شروع استفاده
-      </button>
+<div class="auth">
 
-      <button class="secondary" onclick="showInfo()">
-        بیشتر بدانید
-      </button>
-    </div>
-  </div>
+<h2>🔐 ورود به همراه‌دارو</h2>
 
-  <div class="phone">
-    <div class="screen">
+<input id="email" type="email" placeholder="ایمیل">
 
-      <h3>سلام 👋</h3>
+<input id="password" type="password" placeholder="رمز عبور">
 
-      <div class="medicine">
-        <strong>💊 آملودیپین</strong>
-        <small>امروز - ساعت 08:00</small>
-      </div>
+<button class="btn primary" onclick="login()">
+ورود
+</button>
 
-      <div class="medicine">
-        <strong>💊 متفورمین</strong>
-        <small>امروز - ساعت 14:00</small>
-      </div>
+<button class="btn secondary" onclick="register()">
+ساخت حساب جدید
+</button>
 
-      <div class="medicine">
-        <strong>💊 ویتامین D</strong>
-        <small>امروز - ساعت 20:00</small>
-      </div>
+<p id="authMessage"
+style="text-align:center;margin-top:15px;color:#087f8c">
+</p>
 
-    </div>
-  </div>
+</div>
 
 </section>
 
-<section id="features">
 
-  <div class="section-title">
-    <h2>امکانات همراه‌دارو</h2>
-    <p>همه چیز برای مدیریت ساده‌تر داروها</p>
-  </div>
+<!-- DASHBOARD -->
 
-  <div class="features">
+<main id="dashboard" class="dashboard">
 
-    <div class="card">
-      <div class="icon">⏰</div>
-      <h3>یادآوری دارو</h3>
-      <p>
-        زمان مصرف داروها را ثبت کنید و
-        هیچ نوبتی را فراموش نکنید.
-      </p>
-    </div>
+<div class="container">
 
-    <div class="card">
-      <div class="icon">👨‍👩‍👧</div>
-      <h3>اطلاع خانواده</h3>
-      <p>
-        خانواده می‌توانند وضعیت مصرف
-        داروهای سالمند را پیگیری کنند.
-      </p>
-    </div>
+<h1>سلام 👋</h1>
+<p style="color:#718096;margin-top:8px">
+به پنل همراه‌دارو خوش آمدید.
+</p>
 
-    <div class="card">
-      <div class="icon">🚨</div>
-      <h3>درخواست اضطراری</h3>
-      <p>
-        در مواقع ضروری امکان ثبت درخواست
-        تهیه دارو فراهم می‌شود.
-      </p>
-    </div>
+<div class="cards">
 
-    <div class="card">
-      <div class="icon">💰</div>
-      <h3>کیف پول</h3>
-      <p>
-        مدیریت هزینه‌ها و پرداخت سفارش‌های
-        دارویی در یک محیط ساده.
-      </p>
-    </div>
+<div class="card">
+<div class="icon">💊</div>
+<strong id="medicineCount">0</strong>
+<small>داروی ثبت‌شده</small>
+</div>
 
-    <div class="card">
-      <div class="icon">🔐</div>
-      <h3>حساب کاربری</h3>
-      <p>
-        هر کاربر می‌تواند حساب اختصاصی
-        خود را داشته باشد.
-      </p>
-    </div>
+<div class="card">
+<div class="icon">⏰</div>
+<strong id="todayCount">0</strong>
+<small>نوبت امروز</small>
+</div>
 
-    <div class="card">
-      <div class="icon">📱</div>
-      <h3>مناسب سالمندان</h3>
-      <p>
-        رابط کاربری ساده، خوانا و مناسب
-        استفاده روی موبایل.
-      </p>
-    </div>
+<div class="card">
+<div class="icon">💰</div>
+<strong>0 €</strong>
+<small>موجودی کیف پول</small>
+</div>
 
-  </div>
+<div class="card">
+<div class="icon">🚨</div>
+<strong>0</strong>
+<small>درخواست اضطراری</small>
+</div>
 
-</section>
+</div>
 
-<section id="dashboard">
 
-  <div class="dashboard">
+<div class="panel">
 
-    <h2>📊 وضعیت امروز</h2>
+<h2>💊 داروهای من</h2>
 
-    <div class="dashboard-grid">
+<button class="btn primary" onclick="openMedicineModal()">
+➕ افزودن دارو
+</button>
 
-      <div class="stat">
-        <strong>3</strong>
-        داروی امروز
-      </div>
+<div id="medicineList" class="empty">
+هنوز دارویی ثبت نشده است.
+</div>
 
-      <div class="stat">
-        <strong>2</strong>
-        مصرف شده
-      </div>
+</div>
 
-      <div class="stat">
-        <strong>1</strong>
-        باقی‌مانده
-      </div>
 
-    </div>
+<div class="panel">
 
-  </div>
+<h2>🚨 درخواست داروی اضطراری</h2>
 
-</section>
+<p style="color:#718096;line-height:2;margin-bottom:15px">
+در صورت نیاز می‌توانید درخواست تهیه داروی اضطراری ثبت کنید.
+</p>
 
-<section id="contact">
+<button class="btn primary" onclick="emergencyOrder()">
+ثبت درخواست اضطراری
+</button>
 
-  <div class="section-title">
-    <h2>ورود به همراه‌دارو</h2>
-    <p>برای شروع اطلاعات خود را وارد کنید</p>
-  </div>
+</div>
 
-  <div class="contact">
 
-    <input
-      id="name"
-      type="text"
-      placeholder="نام و نام خانوادگی"
-    >
+<div class="panel">
 
-    <input
-      id="phone"
-      type="tel"
-      placeholder="شماره موبایل"
-    >
+<h2>👨‍👩‍👧 خانواده</h2>
 
-    <button
-      class="primary"
-      style="width:100%;margin-top:10px"
-      onclick="login()"
-    >
-      ورود به سامانه
-    </button>
+<p style="color:#718096;line-height:2">
+در نسخه بعدی می‌توانیم حساب اعضای خانواده را به این حساب متصل کنیم
+تا وضعیت مصرف دارو قابل مشاهده باشد.
+</p>
 
-  </div>
+</div>
 
-</section>
+</div>
+
+</main>
+
+
+<!-- MEDICINE MODAL -->
+
+<div class="modal" id="medicineModal">
+
+<div class="modal-box">
+
+<h2>➕ افزودن دارو</h2>
+
+<input id="medicineName" placeholder="نام دارو">
+
+<input id="medicineTime" type="time">
+
+<input id="medicineDose" placeholder="دوز مصرفی، مثلاً ۱ عدد">
+
+<button class="btn primary" onclick="addMedicine()">
+ذخیره دارو
+</button>
+
+<button class="btn secondary" onclick="closeMedicineModal()">
+لغو
+</button>
+
+</div>
+
+</div>
+
 
 <footer>
-  <strong>💊 همراه‌دارو</strong>
-  <br>
-  همراه هوشمند شما برای مدیریت داروها
-  <br>
-  © 2026 HamrahDaro
+<strong>💊 همراه‌دارو</strong>
+<br>
+سامانه هوشمند مدیریت دارو
+<br>
+© 2026 HamrahDaro
 </footer>
 
-<script>
 
-function startApp() {
-  document
-    .getElementById("contact")
-    .scrollIntoView({ behavior: "smooth" });
+<!-- Firebase -->
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+signOut,
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+query,
+where,
+deleteDoc,
+doc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+apiKey: "YOUR_API_KEY",
+
+authDomain: "hamrahdaro.firebaseapp.com",
+
+projectId: "hamrahdaro",
+
+storageBucket: "hamrahdaro.firebasestorage.app",
+
+messagingSenderId: "92528222063",
+
+appId: "YOUR_APP_ID"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+
+window.firebaseAuth = auth;
+window.firebaseDB = db;
+
+
+onAuthStateChanged(auth, async user => {
+
+if(user){
+
+document.getElementById("authSection").style.display="none";
+
+document.getElementById("dashboard").style.display="block";
+
+document.getElementById("logoutBtn").style.display="block";
+
+document.getElementById("userName").textContent =
+user.email;
+
+await loadMedicines(user.uid);
+
+}else{
+
+document.getElementById("authSection").style.display="block";
+
+document.getElementById("dashboard").style.display="none";
+
+document.getElementById("logoutBtn").style.display="none";
+
+document.getElementById("userName").textContent="";
+
 }
 
-function showInfo() {
-  alert(
-    "همراه‌دارو یک سامانه برای یادآوری مصرف دارو، ارتباط با خانواده و مدیریت درخواست‌های دارویی است."
-  );
+});
+
+
+window.login = async function(){
+
+const email =
+document.getElementById("email").value.trim();
+
+const password =
+document.getElementById("password").value;
+
+const message =
+document.getElementById("authMessage");
+
+if(!email || !password){
+
+message.textContent="ایمیل و رمز عبور را وارد کنید.";
+
+return;
+
 }
 
-function login() {
+try{
 
-  const name =
-    document.getElementById("name").value.trim();
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
 
-  const phone =
-    document.getElementById("phone").value.trim();
+message.textContent="ورود موفق بود.";
 
-  if (!name || !phone) {
-    alert("لطفاً نام و شماره موبایل را وارد کنید.");
-    return;
-  }
+}catch(error){
 
-  alert(
-    "خوش آمدید " +
-    name +
-    " 🌷\nنسخه اولیه همراه‌دارو با موفقیت فعال شد."
-  );
+message.textContent =
+"ورود ناموفق: " + error.message;
+
 }
+
+};
+
+
+window.register = async function(){
+
+const email =
+document.getElementById("email").value.trim();
+
+const password =
+document.getElementById("password").value;
+
+const message =
+document.getElementById("authMessage");
+
+if(!email || !password){
+
+message.textContent="ایمیل و رمز عبور را وارد کنید.";
+
+return;
+
+}
+
+if(password.length < 6){
+
+message.textContent="رمز عبور باید حداقل ۶ کاراکتر باشد.";
+
+return;
+
+}
+
+try{
+
+await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+message.textContent="حساب با موفقیت ساخته شد.";
+
+}catch(error){
+
+message.textContent =
+"خطا: " + error.message;
+
+}
+
+};
+
+
+window.logout = async function(){
+
+await signOut(auth);
+
+};
+
+
+window.openMedicineModal = function(){
+
+document.getElementById("medicineModal").style.display="flex";
+
+};
+
+
+window.closeMedicineModal = function(){
+
+document.getElementById("medicineModal").style.display="none";
+
+};
+
+
+window.addMedicine = async function(){
+
+const user = auth.currentUser;
+
+if(!user)return;
+
+const name =
+document.getElementById("medicineName").value.trim();
+
+const time =
+document.getElementById("medicineTime").value;
+
+const dose =
+document.getElementById("medicineDose").value.trim();
+
+if(!name || !time){
+
+alert("نام دارو و ساعت مصرف را وارد کنید.");
+
+return;
+
+}
+
+try{
+
+await addDoc(
+collection(db,"medicines"),
+{
+uid:user.uid,
+name:name,
+time:time,
+dose:dose,
+createdAt:new Date()
+}
+);
+
+document.getElementById("medicineName").value="";
+document.getElementById("medicineTime").value="";
+document.getElementById("medicineDose").value="";
+
+closeMedicineModal();
+
+await loadMedicines(user.uid);
+
+}catch(error){
+
+alert("خطا در ذخیره دارو: "+error.message);
+
+}
+
+};
+
+
+async function loadMedicines(uid){
+
+const list =
+document.getElementById("medicineList");
+
+const q =
+query(
+collection(db,"medicines"),
+where("uid","==",uid)
+);
+
+const snapshot =
+await getDocs(q);
+
+list.innerHTML="";
+
+document.getElementById("medicineCount").textContent =
+snapshot.size;
+
+document.getElementById("todayCount").textContent =
+snapshot.size;
+
+if(snapshot.empty){
+
+list.innerHTML =
+'<div class="empty">هنوز دارویی ثبت نشده است.</div>';
+
+return;
+
+}
+
+snapshot.forEach(item=>{
+
+const data=item.data();
+
+const div=document.createElement("div");
+
+div.className="medicine";
+
+div.innerHTML=`
+
+<div>
+<strong>💊 ${data.name}</strong>
+<small>
+⏰ ${data.time}
+${data.dose ? " | "+data.dose : ""}
+</small>
+</div>
+
+<div>
+
+<span class="badge">فعال</span>
+
+<button
+style="background:#fff0f0;color:#d33;padding:7px;border-radius:8px;margin-right:5px"
+onclick="deleteMedicine('${item.id}')">
+حذف
+</button>
+
+</div>
+
+`;
+
+list.appendChild(div);
+
+});
+
+}
+
+
+window.deleteMedicine = async function(id){
+
+if(!confirm("این دارو حذف شود؟"))return;
+
+try{
+
+await deleteDoc(
+doc(db,"medicines",id)
+);
+
+await loadMedicines(auth.currentUser.uid);
+
+}catch(error){
+
+alert("خطا در حذف دارو.");
+
+}
+
+};
+
+
+window.emergencyOrder = function(){
+
+alert(
+"🚨 درخواست اضطراری ثبت شد.\n\nدر نسخه بعدی این درخواست به پنل داروخانه/اپراتور ارسال خواهد شد."
+);
+
+};
 
 </script>
 
