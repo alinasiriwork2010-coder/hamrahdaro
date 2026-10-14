@@ -1,1 +1,517 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>همراه‌دارو | همراه هوشمند دارویی</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Tahoma, Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f8fb;
+      color: #17324d;
+    }
+
+    header {
+      background: linear-gradient(135deg, #087f8c, #00a896);
+      color: white;
+      padding: 18px 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-right: 20px;
+      font-size: 15px;
+    }
+
+    .hero {
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      padding: 70px 8%;
+      background: linear-gradient(135deg, #e9fbfa, #ffffff);
+    }
+
+    .hero-text {
+      max-width: 600px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: #00a896;
+    }
+
+    .hero p {
+      font-size: 19px;
+      line-height: 2;
+      color: #526779;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      border-radius: 12px;
+      padding: 14px 25px;
+      font-size: 16px;
+    }
+
+    .primary {
+      background: #00a896;
+      color: white;
+    }
+
+    .secondary {
+      background: white;
+      color: #087f8c;
+      border: 1px solid #00a896;
+    }
+
+    .phone {
+      width: 280px;
+      height: 520px;
+      background: #102a43;
+      border-radius: 35px;
+      padding: 12px;
+      box-shadow: 0 25px 50px rgba(0,0,0,.2);
+    }
+
+    .screen {
+      height: 100%;
+      border-radius: 25px;
+      background: #f7ffff;
+      padding: 25px 15px;
+    }
+
+    .screen h3 {
+      color: #087f8c;
+      margin-bottom: 20px;
+    }
+
+    .medicine {
+      background: white;
+      border-radius: 15px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,.07);
+    }
+
+    .medicine strong {
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .medicine small {
+      color: #718096;
+    }
+
+    section {
+      padding: 80px 8%;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .section-title h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #718096;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.06);
+      transition: .3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .icon {
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #667788;
+      line-height: 1.9;
+    }
+
+    .dashboard {
+      background: #0b7285;
+      color: white;
+      border-radius: 30px;
+      padding: 45px;
+    }
+
+    .dashboard h2 {
+      margin-bottom: 25px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,.13);
+      padding: 25px;
+      border-radius: 18px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 30px;
+      margin-bottom: 5px;
+    }
+
+    .contact {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 35px;
+      border-radius: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.07);
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin: 8px 0;
+      border: 1px solid #d9e2ec;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    footer {
+      background: #102a43;
+      color: white;
+      text-align: center;
+      padding: 30px;
+      line-height: 2;
+    }
+
+    @media(max-width: 800px) {
+      header {
+        padding: 15px 5%;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 50px 5%;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .buttons {
+        justify-content: center;
+      }
+
+      .features,
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .phone {
+        width: 250px;
+        height: 460px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">💊 همراه‌دارو</div>
+
+  <nav>
+    <a href="#features">امکانات</a>
+    <a href="#dashboard">داشبورد</a>
+    <a href="#contact">ورود</a>
+  </nav>
+</header>
+
+<section class="hero">
+
+  <div class="hero-text">
+    <h1>
+      داروهایت را<br>
+      با <span>همراه‌دارو</span><br>
+      فراموش نکن
+    </h1>
+
+    <p>
+      یک دستیار هوشمند برای مدیریت داروها،
+      یادآوری مصرف دارو و ارتباط بهتر سالمندان
+      با خانواده.
+    </p>
+
+    <div class="buttons">
+      <button class="primary" onclick="startApp()">
+        شروع استفاده
+      </button>
+
+      <button class="secondary" onclick="showInfo()">
+        بیشتر بدانید
+      </button>
+    </div>
+  </div>
+
+  <div class="phone">
+    <div class="screen">
+
+      <h3>سلام 👋</h3>
+
+      <div class="medicine">
+        <strong>💊 آملودیپین</strong>
+        <small>امروز - ساعت 08:00</small>
+      </div>
+
+      <div class="medicine">
+        <strong>💊 متفورمین</strong>
+        <small>امروز - ساعت 14:00</small>
+      </div>
+
+      <div class="medicine">
+        <strong>💊 ویتامین D</strong>
+        <small>امروز - ساعت 20:00</small>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<section id="features">
+
+  <div class="section-title">
+    <h2>امکانات همراه‌دارو</h2>
+    <p>همه چیز برای مدیریت ساده‌تر داروها</p>
+  </div>
+
+  <div class="features">
+
+    <div class="card">
+      <div class="icon">⏰</div>
+      <h3>یادآوری دارو</h3>
+      <p>
+        زمان مصرف داروها را ثبت کنید و
+        هیچ نوبتی را فراموش نکنید.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">👨‍👩‍👧</div>
+      <h3>اطلاع خانواده</h3>
+      <p>
+        خانواده می‌توانند وضعیت مصرف
+        داروهای سالمند را پیگیری کنند.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🚨</div>
+      <h3>درخواست اضطراری</h3>
+      <p>
+        در مواقع ضروری امکان ثبت درخواست
+        تهیه دارو فراهم می‌شود.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">💰</div>
+      <h3>کیف پول</h3>
+      <p>
+        مدیریت هزینه‌ها و پرداخت سفارش‌های
+        دارویی در یک محیط ساده.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🔐</div>
+      <h3>حساب کاربری</h3>
+      <p>
+        هر کاربر می‌تواند حساب اختصاصی
+        خود را داشته باشد.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">📱</div>
+      <h3>مناسب سالمندان</h3>
+      <p>
+        رابط کاربری ساده، خوانا و مناسب
+        استفاده روی موبایل.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+<section id="dashboard">
+
+  <div class="dashboard">
+
+    <h2>📊 وضعیت امروز</h2>
+
+    <div class="dashboard-grid">
+
+      <div class="stat">
+        <strong>3</strong>
+        داروی امروز
+      </div>
+
+      <div class="stat">
+        <strong>2</strong>
+        مصرف شده
+      </div>
+
+      <div class="stat">
+        <strong>1</strong>
+        باقی‌مانده
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section id="contact">
+
+  <div class="section-title">
+    <h2>ورود به همراه‌دارو</h2>
+    <p>برای شروع اطلاعات خود را وارد کنید</p>
+  </div>
+
+  <div class="contact">
+
+    <input
+      id="name"
+      type="text"
+      placeholder="نام و نام خانوادگی"
+    >
+
+    <input
+      id="phone"
+      type="tel"
+      placeholder="شماره موبایل"
+    >
+
+    <button
+      class="primary"
+      style="width:100%;margin-top:10px"
+      onclick="login()"
+    >
+      ورود به سامانه
+    </button>
+
+  </div>
+
+</section>
+
+<footer>
+  <strong>💊 همراه‌دارو</strong>
+  <br>
+  همراه هوشمند شما برای مدیریت داروها
+  <br>
+  © 2026 HamrahDaro
+</footer>
+
+<script>
+
+function startApp() {
+  document
+    .getElementById("contact")
+    .scrollIntoView({ behavior: "smooth" });
+}
+
+function showInfo() {
+  alert(
+    "همراه‌دارو یک سامانه برای یادآوری مصرف دارو، ارتباط با خانواده و مدیریت درخواست‌های دارویی است."
+  );
+}
+
+function login() {
+
+  const name =
+    document.getElementById("name").value.trim();
+
+  const phone =
+    document.getElementById("phone").value.trim();
+
+  if (!name || !phone) {
+    alert("لطفاً نام و شماره موبایل را وارد کنید.");
+    return;
+  }
+
+  alert(
+    "خوش آمدید " +
+    name +
+    " 🌷\nنسخه اولیه همراه‌دارو با موفقیت فعال شد."
+  );
+}
+
+</script>
+
+</body>
+</html>
